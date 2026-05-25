@@ -13,10 +13,9 @@ concurrency:
 # Autofix needs contents:write to push commits back; issues:write to post the
 # claude:suggested-merge handoff comment when Kimi sees a clean review.
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
   checks: write
-  issues: write
 
 jobs:
   kimi-review:
@@ -30,7 +29,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           # Full history so `git log --grep` can count prior kimi-autofix commits.
           fetch-depth: 0
-      - uses: Unluckyathecking/kimi-code-reviewer@main
+      - uses: Unluckyathecking/kimi-code-reviewer@6bf5f6a2e933fd5db5a5133a14728df5910ba372
         with:
           kimi_api_key: ${{ secrets.MOONSHOT_API_KEY }}
           fail_on: warning

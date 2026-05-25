@@ -530,20 +530,16 @@ class CliRunner:
             for key, value in env.items():
                 old_env[key] = os.environ.get(key)
                 if value is None:
-                    try:
+                    with contextlib.suppress(KeyError):
                         del os.environ[key]
-                    except Exception:
-                        pass
                 else:
                     os.environ[key] = value
             yield (stream_mixer.stdout, stream_mixer.stderr, stream_mixer.output)
         finally:
             for key, value in old_env.items():
                 if value is None:
-                    try:
+                    with contextlib.suppress(KeyError):
                         del os.environ[key]
-                    except Exception:
-                        pass
                 else:
                     os.environ[key] = value
             sys.stdout = old_stdout
@@ -730,7 +726,5 @@ class CliRunner:
             if temp_dir is None:
                 import shutil
 
-                try:
+                with contextlib.suppress(OSError):
                     shutil.rmtree(dt)
-                except OSError:
-                    pass

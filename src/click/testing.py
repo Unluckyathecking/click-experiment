@@ -530,6 +530,7 @@ class CliRunner:
             for key, value in env.items():
                 old_env[key] = os.environ.get(key)
                 if value is None:
+                    # The key may not exist in os.environ, which is fine.
                     with contextlib.suppress(KeyError):
                         del os.environ[key]
                 else:
@@ -538,6 +539,7 @@ class CliRunner:
         finally:
             for key, value in old_env.items():
                 if value is None:
+                    # The key may not exist in os.environ, which is fine.
                     with contextlib.suppress(KeyError):
                         del os.environ[key]
                 else:

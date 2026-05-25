@@ -9,6 +9,7 @@ import sys
 import typing as t
 from contextlib import AbstractContextManager
 from contextlib import redirect_stdout
+from contextlib import suppress
 from gettext import gettext as _
 
 from ._compat import isatty
@@ -921,10 +922,8 @@ def pause(info: str | None = None, err: bool = False) -> None:
     try:
         if info:
             echo(info, nl=False, err=err)
-        try:
+        with suppress(KeyboardInterrupt, EOFError):
             getchar()
-        except (KeyboardInterrupt, EOFError):
-            pass
     finally:
         if info:
             echo(err=err)

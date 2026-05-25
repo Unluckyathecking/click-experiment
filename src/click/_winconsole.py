@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import collections.abc as cabc
+import contextlib
 import io
 import sys
 import time
@@ -204,10 +205,8 @@ class ConsoleStream:
     def write(self, x: t.AnyStr) -> int:
         if isinstance(x, str):
             return self._text_stream.write(x)
-        try:
+        with contextlib.suppress(Exception):
             self.flush()
-        except Exception:
-            pass
         return self.buffer.write(x)
 
     def writelines(self, lines: cabc.Iterable[t.AnyStr]) -> None:

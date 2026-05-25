@@ -856,9 +856,7 @@ class File(ParamType[t.IO[t.Any]]):
             return self.lazy
         if os.fspath(value) == "-":
             return False
-        elif "w" in self.mode:
-            return True
-        return False
+        return "w" in self.mode
 
     def convert(
         self,

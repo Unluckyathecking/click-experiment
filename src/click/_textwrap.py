@@ -95,10 +95,7 @@ class TextWrapper(textwrap.TextWrapper):
             cur_line: list[str] = []
             cur_len = 0
 
-            if lines:
-                indent = self.subsequent_indent
-            else:
-                indent = self.initial_indent
+            indent = self.subsequent_indent if lines else self.initial_indent
 
             width = self.width - term_len(indent)
 

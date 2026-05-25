@@ -75,10 +75,7 @@ def _unpack_args(
             return UNSET
 
     while nargs_spec:
-        if spos is None:
-            nargs = nargs_spec.popleft()
-        else:
-            nargs = nargs_spec.pop()
+        nargs = nargs_spec.popleft() if spos is None else nargs_spec.pop()
 
         if nargs == 1:
             rv.append(_fetch(args))

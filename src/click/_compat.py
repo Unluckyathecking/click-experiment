@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import codecs
 import collections.abc as cabc
+import contextlib
 import io
 import os
 import re
@@ -560,10 +561,8 @@ def _make_cached_stream_func(
         if rv is not None:
             return rv
         rv = wrapper_func()
-        try:
+        with contextlib.suppress(Exception):
             cache[stream] = rv
-        except Exception:
-            pass
         return rv
 
     return func

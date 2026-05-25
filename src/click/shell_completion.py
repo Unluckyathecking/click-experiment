@@ -497,7 +497,7 @@ def split_arg_string(string: str) -> list[str]:
     lex = shlex.shlex(string, posix=True)
     lex.whitespace_split = True
     lex.commenters = ""
-    out: list[str] = []
+    out = []  # type: ignore[var-annotated]
 
     try:
         out.extend(lex)

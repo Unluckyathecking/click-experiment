@@ -505,7 +505,6 @@ def split_arg_string(string: str) -> list[str]:
         # Raised when end-of-string is reached in an invalid state. Use
         # the partial token as-is. The quote or escape character is in
         # lex.state, not lex.token.
-        # extend() will stop on ValueError, leaving lex.token with the partial token
         out.append(lex.token)
 
     return out

@@ -759,7 +759,7 @@ def open_url(url: str, wait: bool = False, locate: bool = False) -> int:
     def _unquote_file(url: str) -> str:
         from urllib.parse import unquote
 
-        if url.startswith("file://"):
+        if url.lower().startswith("file://"):
             url = unquote(url[7:])
 
         return url
@@ -815,7 +815,7 @@ def open_url(url: str, wait: bool = False, locate: bool = False) -> int:
             return c.wait()
         return 0
     except OSError:
-        if url.startswith(("http://", "https://")) and not locate and not wait:
+        if url.lower().startswith(("http://", "https://")) and not locate and not wait:
             import webbrowser
 
             webbrowser.open(url)

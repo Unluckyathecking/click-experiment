@@ -2195,7 +2195,10 @@ class Parameter(ABC):
         # Default nargs to what the type tells us if we have that
         # information available.
         if nargs is None:
-            nargs = self.type.arity if self.type.is_composite else 1
+            if self.type.is_composite:
+                nargs = self.type.arity
+            else:
+                nargs = 1
 
         self.required = required
         self.callback = callback

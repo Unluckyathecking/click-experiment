@@ -279,7 +279,10 @@ def echo(
         Support colors on Windows if colorama is installed.
     """
     if file is None:
-        file = _default_text_stderr() if err else _default_text_stdout()
+        if err:
+            file = _default_text_stderr()
+        else:
+            file = _default_text_stdout()
 
         # There are no standard streams attached to write to. For example,
         # pythonw on Windows.
@@ -434,7 +437,10 @@ def format_filename(
     :param shorten: this optionally shortens the filename to strip of the
                     path that leads up to it.
     """
-    filename = os.path.basename(filename) if shorten else os.fspath(filename)
+    if shorten:
+        filename = os.path.basename(filename)
+    else:
+        filename = os.fspath(filename)
 
     if isinstance(filename, bytes):
         filename = filename.decode(sys.getfilesystemencoding(), "replace")

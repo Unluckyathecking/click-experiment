@@ -86,7 +86,7 @@ class ParamType(t.Generic[ParamTypeValue], abc.ABC):
         param_type = param_type.partition("ParameterType")[0]
 
         # Custom subclasses might not remember to set a name.
-        name = self.name if hasattr(self, "name") else param_type
+        name = getattr(self, "name", None) or param_type
 
         return {"param_type": param_type, "name": name}
 

@@ -585,3 +585,19 @@ def test_fish_format_completion_escapes_help():
     # The newline is escaped to the literal characters backslash-n and the tab
     # becomes a space, so each completion stays on one line for fish.
     assert fc.format_completion(item) == "plain,--at\tfirst\\nsecond third"
+
+@pytest.mark.parametrize(
+    ("value", "expect"),
+    [
+        ("cli a b c", ["cli", "a", "b", "c"]),
+        ("cli 'my file", ["cli", "my file"]),
+        ("cli 'my file'", ["cli", "my file"]),
+        ("cli my\\", ["cli", "my"]),
+        ("cli my\\ file", ["cli", "my file"]),
+        ("a b c 'd", ["a", "b", "c", "d"]),
+        ("", []),
+    ],
+)
+def test_split_arg_string_edge_cases(value, expect):
+    from click.shell_completion import split_arg_string
+    assert split_arg_string(value) == expect

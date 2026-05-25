@@ -497,11 +497,10 @@ def split_arg_string(string: str) -> list[str]:
     lex = shlex.shlex(string, posix=True)
     lex.whitespace_split = True
     lex.commenters = ""
-    out = []
+    out = []  # type: ignore[var-annotated]
 
     try:
-        for token in lex:
-            out.append(token)
+        out.extend(lex)
     except ValueError:
         # Raised when end-of-string is reached in an invalid state. Use
         # the partial token as-is. The quote or escape character is in

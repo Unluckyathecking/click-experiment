@@ -1,0 +1,11 @@
+--- src/click/shell_completion.py
++++ src/click/shell_completion.py
+@@ -497,7 +497,7 @@
+     lex = shlex.shlex(string, posix=True)
+     lex.whitespace_split = True
+     lex.commenters = ""
+-    out = []
++    out: list[str] = []
+
+     try:
+         out.extend(lex)

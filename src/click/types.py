@@ -86,10 +86,7 @@ class ParamType(t.Generic[ParamTypeValue], abc.ABC):
         param_type = param_type.partition("ParameterType")[0]
 
         # Custom subclasses might not remember to set a name.
-        if hasattr(self, "name"):
-            name = self.name
-        else:
-            name = param_type
+        name = self.name if hasattr(self, "name") else param_type
 
         return {"param_type": param_type, "name": name}
 
@@ -856,9 +853,7 @@ class File(ParamType[t.IO[t.Any]]):
             return self.lazy
         if os.fspath(value) == "-":
             return False
-        elif "w" in self.mode:
-            return True
-        return False
+        return "w" in self.mode
 
     def convert(
         self,

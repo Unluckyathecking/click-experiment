@@ -6,7 +6,6 @@ import io
 import os
 import pdb
 import shlex
-import shutil
 import sys
 import tempfile
 import typing as t
@@ -531,7 +530,7 @@ class CliRunner:
             for key, value in env.items():
                 old_env[key] = os.environ.get(key)
                 if value is None:
-                    with contextlib.suppress(OSError, KeyError):
+                    with contextlib.suppress(Exception):
                         del os.environ[key]
                 else:
                     os.environ[key] = value
@@ -539,7 +538,7 @@ class CliRunner:
         finally:
             for key, value in old_env.items():
                 if value is None:
-                    with contextlib.suppress(OSError, KeyError):
+                    with contextlib.suppress(Exception):
                         del os.environ[key]
                 else:
                     os.environ[key] = value
@@ -725,5 +724,7 @@ class CliRunner:
             os.chdir(cwd)
 
             if temp_dir is None:
+                import shutil
+
                 with contextlib.suppress(OSError):
                     shutil.rmtree(dt)

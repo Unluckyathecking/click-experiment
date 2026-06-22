@@ -586,6 +586,7 @@ def test_fish_format_completion_escapes_help():
     # becomes a space, so each completion stays on one line for fish.
     assert fc.format_completion(item) == "plain,--at\tfirst\\nsecond third"
 
+
 @pytest.mark.parametrize(
     ("value", "expect"),
     [
@@ -600,4 +601,5 @@ def test_fish_format_completion_escapes_help():
 )
 def test_split_arg_string_edge_cases(value, expect):
     from click.shell_completion import split_arg_string
+
     assert split_arg_string(value) == expect
